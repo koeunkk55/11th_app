@@ -1,8 +1,11 @@
 package com.example.a11th_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,26 +18,34 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.a11th_app.Movie;
+import com.example.a11th_app.MovieAdapter;
+import com.example.a11th_app.MovieList;
+import com.google.gson.Gson;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    EditText edittext;
-    TextView textView;
+    EditText requestText;
+    TextView responseText;
+
     static RequestQueue requestQueue;
+
+    RecyclerView recyclerView;
+    MovieAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        requestText = findViewById(R.id.xeditText);
 
-        edittext = findViewById(R.id.edittext);
-        textView = findViewById(R.id.textView);
-
-        Button request_Btn = findViewById(R.id.request_btn);
-        request_Btn.setOnClickListener(new View.OnClickListener() {
+        Button requestBtn = findViewById(R.id.request_btn);
+        requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 makeRequest();
@@ -44,11 +55,16 @@ public class MainActivity extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
+
+        recyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager((layoutManager));
+
+        adapter = new MovieAdapter();
+        recyclerView.setAdapter(adapter);
     }
-
     public void makeRequest() {
-        String url = edittext.getText().toString();
-
+        String url = requestText.getText().toString();
         StringRequest request = new StringRequest(
                 Request.Method.GET,
                 url,
@@ -56,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         println("응답 -> " + response);
-
+                        processResponse(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -68,19 +84,29 @@ public class MainActivity extends AppCompatActivity {
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String,String> params = new HashMap<String,String>();
 
                 return params;
             }
         };
-
         request.setShouldCache(false);
         requestQueue.add(request);
-        println("요청 보냄");
+        println("요청 보냄.");
     }
-
     public void println(String data) {
-        textView.append(data + "\n");
-    }
+        Log.d("MainActivity",data);
 
+    }
+    public void processResponse(String response)
+    {
+        Gson gson = new Gson();
+        MovieList movieList = gson.fromJson(response, MovieList.class);
+        println("영화 정보의 수 : " + movieList.boxOfficeResult.dailyBoxOfficeList.size());
+
+        for(int i = 0; i< movieList.boxOfficeResult.dailyBoxOfficeList.size();i++){
+            Movie movie = movieList.boxOfficeResult.dailyBoxOfficeList.get(i);
+            adapter.addItem(movie);
+        }
+        adapter.notifyDataSetChanged();
+    }
 }

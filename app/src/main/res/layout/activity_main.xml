@@ -21,6 +21,13 @@
         android:text="요청하기"
         />
 
+    <Button
+        android:id="@+id/zzz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="그냥만듬"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

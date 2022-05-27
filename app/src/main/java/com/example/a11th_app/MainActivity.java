@@ -15,13 +15,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    EditText edittext;
-    TextView textView;
+    EditText requsetText;
+    TextView responseText;
     static RequestQueue requestQueue;
 
     @Override
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        edittext = findViewById(R.id.edittext);
-        textView = findViewById(R.id.textView);
+        requsetText = findViewById(R.id.edittext);
+        responseText = findViewById(R.id.textView);
 
         Button request_Btn = findViewById(R.id.request_btn);
         request_Btn.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makeRequest() {
-        String url = edittext.getText().toString();
+        String url = requsetText.getText().toString();
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         println("응답 -> " + response);
-
+                        processResponse(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -78,9 +79,15 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(request);
         println("요청 보냄");
     }
+    public void println(String data){
+        responseText.append(data + "\n");
 
-    public void println(String data) {
-        textView.append(data + "\n");
     }
 
+    public void processResponse(String response) {
+
+        Gson gson = new Gson();
+        MovieList movieList = gson.fromJson(response, MovieList.class);
+        println("영화 정보의 수 : " + movieList.boxOfficeResult.dailyBoxOffice.size());
+    }
 }

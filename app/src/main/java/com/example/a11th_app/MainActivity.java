@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    EditText requsetText;
-    TextView responseText;
+    EditText editText;
+    TextView textView;
     static RequestQueue requestQueue;
 
     @Override
@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        requsetText = findViewById(R.id.edittext);
-        responseText = findViewById(R.id.textView);
+        editText = findViewById(R.id.xeditText);
+        textView = findViewById(R.id.xtextView);
 
-        Button request_Btn = findViewById(R.id.request_btn);
+        Button request_Btn = findViewById(R.id.xbutton);
         request_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 makeRequest();
             }
         });
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makeRequest() {
-        String url = requsetText.getText().toString();
+        String url = editText.getText().toString();
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String,String>();
 
                 return params;
             }
@@ -80,12 +80,11 @@ public class MainActivity extends AppCompatActivity {
         println("요청 보냄");
     }
     public void println(String data){
-        responseText.append(data + "\n");
-
+        textView.append(data + "\n");
     }
 
-    public void processResponse(String response) {
-
+    public void processResponse(String response)
+    {
         Gson gson = new Gson();
         MovieList movieList = gson.fromJson(response, MovieList.class);
         println("영화 정보의 수 : " + movieList.boxOfficeResult.dailyBoxOffice.size());

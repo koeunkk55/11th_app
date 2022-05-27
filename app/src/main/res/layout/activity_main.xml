@@ -8,39 +8,34 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/edittext"
+        android:id="@+id/xeditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e1320f731f9a79e390dc100c49fc9e40&amp;targetDt=20220101"
+        android:text="https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=e1320f731f9a79e390dc100c49fc9e40&amp;targetDt=20211001"
         />
 
     <Button
-        android:id="@+id/request_btn"
+        android:id="@+id/xbutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="요청하기"
         />
 
-    <Button
-        android:id="@+id/zzz"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="그냥만듬"
-        />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/xtextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp">
-            </TextView>
+                android:textSize="20sp"></TextView>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

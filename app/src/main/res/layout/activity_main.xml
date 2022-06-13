@@ -13,6 +13,7 @@ tools:context=".MainActivity">
         android:layout_height="wrap_content"
         android:text="https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=bdfc6de941e14305d65b2d5f88af1153&amp;targetDt=20220501"
         />
+
     <Button
         android:id="@+id/request_btn"
         android:layout_width="match_parent"

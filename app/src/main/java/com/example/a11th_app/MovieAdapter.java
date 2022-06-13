@@ -45,6 +45,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         TextView peopleCount;
         TextView Rank;
         TextView Allpeople;
+        TextView Date;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -52,6 +53,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             peopleCount = itemView.findViewById(R.id.peopleCount);
             Rank = itemView.findViewById(R.id.Rank);
             Allpeople = itemView.findViewById(R.id.Allpeople);
+            Date =  itemView.findViewById(R.id.Date);
+
 
         }
         public void setItem(Movie item)
@@ -60,6 +63,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             peopleCount.setText(item.audiCnt);
             Rank.setText(item.rank);
             Allpeople.setText(item.audiAcc);
+            Date.setText(item.openDt);
         }
     }
 }

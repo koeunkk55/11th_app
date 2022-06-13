@@ -8,10 +8,10 @@ public class Movie {
     String movieCd;
     String movieNm;
     String openDt;
-    String saleAmt;
+    String salesAnt;
     String salesShare;
     String salesInten;
-    String salesChange;
+    String saleschange;
     String salesAcc;
     String audiCnt;
     String audiInten;

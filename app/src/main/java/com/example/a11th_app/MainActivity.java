@@ -18,13 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.a11th_app.Movie;
-import com.example.a11th_app.MovieAdapter;
-import com.example.a11th_app.MovieList;
 import com.google.gson.Gson;
 
-import org.w3c.dom.Text;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,12 +53,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         recyclerView = findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager
+                (this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager((layoutManager));
 
         adapter = new MovieAdapter();
         recyclerView.setAdapter(adapter);
+
     }
+
+
     public void makeRequest() {
         String url = requestText.getText().toString();
         StringRequest request = new StringRequest(
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void println(String data) {
         Log.d("MainActivity",data);
-
     }
     public void processResponse(String response)
     {
